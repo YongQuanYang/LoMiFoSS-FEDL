@@ -6,6 +6,7 @@ from datetime import datetime
 import math
 import numpy as np
 import tqdm
+import pickle
 
 import torch.nn.functional as F
 
@@ -108,13 +109,15 @@ def train_epoch(
     }
 
 
-def eval(loader, model, criterion, cuda=True, regression=False, verbose=False):
+def eval(loader, model, criterion, cuda=True, regression=False, verbose=False, res_path=None):
     loss_sum = 0.0
     correct = 0.0
     num_objects_total = len(loader.dataset)
 
     model.eval()
 
+    logits_list = []
+    target_list = []
     with torch.no_grad():
         if verbose:
             loader = tqdm.tqdm(loader)
@@ -130,7 +133,17 @@ def eval(loader, model, criterion, cuda=True, regression=False, verbose=False):
             if not regression:
                 pred = output.data.argmax(1, keepdim=True)
                 correct += pred.eq(target.data.view_as(pred)).sum().item()
-
+            logits_list.append(output.clone().data.cpu().detach().numpy())
+            target_list.append(target.clone().data.cpu().detach().numpy())
+    logits = np.concatenate(logits_list, axis=0)
+    label = np.concatenate(target_list, axis=0)
+    print("logits shape:{}".format(logits.shape))
+    res_dict = {
+        "logits": logits,
+        "label": label
+    }
+    if res_path:
+        pickle.dump(res_dict, open(res_path, 'wb'))
     return {
         "loss": loss_sum / num_objects_total,
         "accuracy": None if regression else correct / num_objects_total * 100.0,
@@ -214,6 +227,7 @@ def bn_update(loader, model, verbose=False, subset=None, **kwargs):
     with torch.no_grad():
         if subset is not None:
             num_batches = int(num_batches * subset)
+            num_batches = max(num_batches, 1)
             loader = itertools.islice(loader, num_batches)
         if verbose:
 
