@@ -427,9 +427,9 @@ def main():
         if args.swa_resume is not None:
             swag_model.to(args.device)
             swag_model.sample(0.0)
-            # test_res = utils.eval(loaders["test"], swag_model, criterion, verbose=args.verbose, res_path=res_path)
+            test_res = utils.eval(loaders["test"], swag_model, criterion, verbose=args.verbose, res_path=res_path)
             # print("test res:{}".format(test_res))
-            test_res = utils.eval(loaders["test"], model, criterion, verbose=args.verbose, res_path=res_path)
+            #test_res = utils.eval(loaders["test"], model, criterion, verbose=args.verbose, res_path=res_path)
             print("test res:{}".format(test_res))
             return
         else:

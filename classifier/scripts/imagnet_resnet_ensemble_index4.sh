@@ -41,20 +41,23 @@ CUDA_VISIBLE_DEVICES=1,2 python  experiments/imagenet/run_swag_imagenet.py \
     --swa_lr=${swa_lr} \
     --swa_freq=4 2>&1 | tee -a ${work_dir}/log.txt
 
-#
-#
-##evaluate
+
+
+#evaluate
 #mkdir -p ${work_dir}/res
 ##CKPT_INDEX_SET="1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20"
 ##CKPT_INDEX_SET="1 2 3 4 5"
 #CKPT_INDEX_SET="1"
 #
-#val_list="./dataset/imagenet/val_list.txt"
-##val_list="./dataset/imagenet/train_0.05.txt"
+##val_list="./dataset/imagenet/val_list.txt"
+#val_list="./dataset/imagenet/train_0.05.txt"
 #for CKPT_INDEX in ${CKPT_INDEX_SET}
 #do
-#pretrain_path=${work_dir}/norm-${CKPT_INDEX}.pt
-#res_path=${work_dir}/res/norm-${CKPT_INDEX}.pkl
+##pretrain_path=${work_dir}/norm-${CKPT_INDEX}.pt
+##res_path=${work_dir}/res/norm-${CKPT_INDEX}.pkl
+#
+#pretrain_path=./work_dirs/imagenet_resnet50_retrain_train0.95_val/normal_best-0.pt
+#res_path=${work_dir}/test_res/norm-0.pkl
 #CUDA_VISIBLE_DEVICES=0,1 python  experiments/imagenet/run_swag_imagenet.py \
 #    --dir=${work_dir} \
 #    --model=${model} \
@@ -77,4 +80,4 @@ CUDA_VISIBLE_DEVICES=1,2 python  experiments/imagenet/run_swag_imagenet.py \
 #    --res_path=${res_path} \
 #    --swa_freq=4 2>&1 | tee -a ${work_dir}/eval_log.txt
 #done
-#
+

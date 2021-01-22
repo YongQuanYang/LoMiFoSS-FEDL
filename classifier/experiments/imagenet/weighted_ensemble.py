@@ -60,14 +60,15 @@ def main():
         return 1 - acc
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
     # https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html#optimize-minimize-neldermead
-    opt_weights = optimize.minimize(loss_function,
-                                    [1 / len(pred_list)] * len(pred_list),
-                                    constraints=({'type': 'eq', 'fun': lambda w: 1 - sum(w)}),
-                                    method='Nelder-Mead',  # 'SLSQP',
-                                    bounds=[(0.0, 1.0)] * len(pred_list),
-                                    options={'fatol': 1e-4, 'disp': True, 'maxiter': 300},
-                                    )['x']
+    # opt_weights = optimize.minimize(loss_function,
+    #                                 [1 / len(pred_list)] * len(pred_list),
+    #                                 constraints=({'type': 'eq', 'fun': lambda w: 1 - sum(w)}),
+    #                                 method='Nelder-Mead',  # 'SLSQP',
+    #                                 bounds=[(0.0, 1.0)] * len(pred_list),
+    #                                 options={'fatol': 1e-4, 'disp': True, 'maxiter': 300},
+    #                                 )['x']
 
+    opt_weights = [1 / len(pred_list)] * len(pred_list)
     print('Optimum weights = ', opt_weights, 'with loss', loss_function(opt_weights))
 
     def acc_function(weights):
