@@ -474,6 +474,7 @@ def main():
                     criterion,
                     optimizer,
                     subset=subset,
+                    subset_order=i,
                     verbose=args.verbose,
                 )
 

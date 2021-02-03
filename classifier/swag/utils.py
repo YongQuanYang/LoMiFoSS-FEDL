@@ -56,6 +56,7 @@ def train_epoch(
     regression=False,
     verbose=False,
     subset=None,
+    subset_order=0,
 ):
     loss_sum = 0.0
     correct = 0.0
@@ -67,8 +68,10 @@ def train_epoch(
     model.train()
 
     if subset is not None:
-        num_batches = int(num_batches * subset)
-        loader = itertools.islice(loader, num_batches)
+        #num_batches = int(num_batches * subset)
+        start = int(num_batches * subset * subset_order)
+        end = int(num_batches * subset * (subset_order + 1))
+        loader = itertools.islice(loader, start, end)
 
     if verbose:
         loader = tqdm.tqdm(loader, total=num_batches)
