@@ -1,8 +1,9 @@
-# LoMiFoSS-EDL
+# LoMiFoSS-FEDL
+This is an instance implementation for the concept proposed in [LoMiFoSS-FEDL](https://www.sciencedirect.com/science/article/abs/pii/S003132032030385X), which argues that local minima found in the subparameter sapce can be effective for ensembles of deep convolutional neural networks (DCNNs). This instance implementation is a simpler version compared with the instance implementation presented in [LoMiFoSS-FEDL](https://www.sciencedirect.com/science/article/abs/pii/S003132032030385X). This difference is that we employed [SWA](https://arxiv.org/abs/1803.05407) to find multiple extra base learners and integrate them in the subparameter space of a DCNN.
 
 ## classifier
 
-classifier code is modified from [swa_gaussian](https://github.com/wjmaddox/swa_gaussian)
+This code is modified from [swa_gaussian](https://github.com/wjmaddox/swa_gaussian)
 
 ### dataset
 
